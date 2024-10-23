@@ -1,0 +1,75 @@
+<section class="max-w-full text-center">
+    <div
+        id="animatedDiv"
+        class="w-full h-max bg-primary transition-colors duration-1000 p-4"
+    >
+        <h2 class="text-white text-6xl mb-8">PhotoAlbum</h2>
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
+            <img
+                src="https://picsum.photos/800/600?random=1"
+                alt="Random image 1"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/500/600?random=2"
+                alt="Random image 2"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/800/600?random=3"
+                alt="Random image 3"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/800/600?random=4"
+                alt="Random image 4"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/800/600?random=5"
+                alt="Random image 5"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/800/600?random=6"
+                alt="Random image 6"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/800/600?random=7"
+                alt="Random image 7"
+                class="rounded-lg"
+            />
+            <img
+                src="https://picsum.photos/800/600?random=8"
+                alt="Random image 8"
+                class="rounded-lg"
+            />
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+        const animatedDiv = document.getElementById("animatedDiv");
+        const container = document.getElementById("container");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    animatedDiv.classList.add("bg-secondary");
+                    container?.classList.add("opacity-0");
+                    animatedDiv.classList.remove("bg-primary");
+                } else {
+                    animatedDiv.classList.add("bg-primary");
+                    container?.classList.remove("opacity-0");
+                    animatedDiv.classList.remove("bg-secondary");
+                }
+            });
+        });
+
+        observer.observe(animatedDiv);
+    });
+</script>
