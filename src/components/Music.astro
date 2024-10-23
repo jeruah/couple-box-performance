@@ -1,0 +1,35 @@
+<audio id="audio" src="/music.m4a" class="hidden" autoplay></audio>
+<button id="PlayPauseButton">Pause</button>
+
+<style>
+    #PlayPauseButton {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        padding: 10px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 15px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+</style>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+        const audio = document.getElementById("audio");
+        const playPauseButton = document.getElementById("PlayPauseButton");
+
+        playPauseButton?.addEventListener("click", () => {
+            if (audio?.paused) {
+                audio?.play();
+                playPauseButton.textContent = "Pause";
+            } else {
+                audio?.pause();
+                playPauseButton.textContent = "Play";
+            }
+        });
+    });
+</script>

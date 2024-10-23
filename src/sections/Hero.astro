@@ -1,0 +1,125 @@
+<section class="flex flex-col items-center max-w-full">
+    <h1 class="text-black uppercase text-7xl mt-10" style="position: absolute;">
+        Couple BOX
+    </h1>
+    <div id="container"></div>
+</section>
+
+<script>
+    import * as THREE from "three";
+    import webGL from "three/examples/jsm/capabilities/WebGL.js";
+    import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+    import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+    import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+    import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+
+    const container = document.getElementById("container");
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+    );
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container?.appendChild(renderer.domElement);
+
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(1, 1, 0.2).normalize();
+    scene.add(light);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+
+    // Set the background color of the scene
+    scene.background = new THREE.Color(0xfec3ff);
+
+    let heart: THREE.Mesh | null = null; // Cambiado de 'false' a 'null'
+
+    const loader = new OBJLoader();
+    loader.load(
+        "models/heart.obj",
+        function (object) {
+            object.scale.set(0.03, 0.03, 0.03);
+            object.position.set(0, 0, 0);
+            object.rotation.y = Math.PI / 2;
+            object.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    heart = child; // Asignar 'heart' aquí
+                    child.material = new THREE.MeshStandardMaterial({
+                        color: 0x900000, // Ensure this color contrasts with the background
+                        emissive: 0x9a0000,
+                        emissiveIntensity: 1.8,
+                        roughness: 1,
+                    });
+                }
+            });
+            scene.add(object);
+        },
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        },
+        function (error) {
+            console.log("An error happened");
+        },
+    );
+
+    // Initializing composer
+    const composer = new EffectComposer(renderer);
+    const renderPass = new RenderPass(scene, camera);
+    composer.addPass(renderPass);
+
+    // Bloom effect
+    const bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        2,
+        1,
+        0.9,
+    );
+    composer.addPass(bloomPass);
+
+    camera.position.z = 5;
+
+    // WebGL compatibility check
+    if (!webGL.isWebGL2Available()) {
+        const warning = webGL.getWebGLErrorMessage();
+        container?.appendChild(warning);
+    } else {
+        console.log("WebGL2 is available");
+    }
+
+    let time = 0;
+    const speed = 0.12;
+    const scaleIntensity = 0.3;
+
+    // Heartbeat animation
+    function heartBeat(time: number) {
+        const beat1 = Math.sin(time * speed) * scaleIntensity;
+        const beat2 =
+            Math.sin(time * speed + Math.PI / 8) * scaleIntensity * 0.5;
+        return 1 + Math.abs(Math.max(beat1, beat2));
+    }
+
+    // Animate
+    function animate() {
+        if (heart) {
+            // Asegúrate de que 'heart' esté cargado
+            time += 0.5;
+            const scales = heartBeat(time);
+            heart.scale.set(scales, scales, scales); // Scale the heart
+        }
+        composer.render();
+    }
+
+    renderer.setAnimationLoop(animate);
+
+    window.addEventListener("resize", () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        composer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
