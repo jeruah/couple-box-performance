@@ -1,0 +1,19 @@
+---
+interface Props {
+    music: string;
+}
+
+const { music } = Astro.props;
+const link =
+    music.replace(
+        "https://open.spotify.com/intl-es/",
+        "https://open.spotify.com/embed/",
+    ) + "?utm_source=generator";
+---
+
+<iframe
+    src={link}
+    class="rounded-lg w-full"
+    height="80"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy"></iframe>
