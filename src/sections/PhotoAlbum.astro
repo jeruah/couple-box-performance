@@ -1,52 +1,38 @@
-<section class="max-w-full text-center">
+---
+interface Props {
+    imgInfo: {
+        src: string;
+        alt: string;
+        post: string;
+    }[];
+}
+
+import AddButton from "@/components/AddButton.astro";
+
+const { imgInfo = [] } = Astro.props;
+---
+
+<section class="max-w-full min-h-screen text-center">
     <div
         id="animatedDiv"
-        class="w-full h-max bg-primary transition-colors duration-1000 p-4"
+        class="w-full h-max bg-primary transition-colors duration-700 p-4 flex flex-col"
     >
-        <h2 class="text-white text-6xl mb-8">PhotoAlbum</h2>
+        <h2 class="text-white text-6xl mt-10 mb-20">PhotoAlbum</h2>
         <div
-            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
         >
-            <img
-                src="https://picsum.photos/800/600?random=1"
-                alt="Random image 1"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/500/600?random=2"
-                alt="Random image 2"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/800/600?random=3"
-                alt="Random image 3"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/800/600?random=4"
-                alt="Random image 4"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/800/600?random=5"
-                alt="Random image 5"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/800/600?random=6"
-                alt="Random image 6"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/800/600?random=7"
-                alt="Random image 7"
-                class="rounded-lg"
-            />
-            <img
-                src="https://picsum.photos/800/600?random=8"
-                alt="Random image 8"
-                class="rounded-lg"
-            />
+            {
+                imgInfo.map((img) => (
+                    <a href={`/posts/${img.post}`}>
+                        <img
+                            src={img.src}
+                            alt={img.alt}
+                            class="rounded-lg transform transition-transform duration-100 hover:scale-105 cursor-pointer"
+                        />
+                    </a>
+                ))
+            }
+            <AddButton />
         </div>
     </div>
 </section>

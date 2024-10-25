@@ -4,13 +4,46 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/sections/Hero.astro";
 import PhotoAlbum from "@/sections/PhotoAlbum.astro";
 import Music from "@/components/Music.astro";
+
+const imgInfo = [
+	{
+		src: "https://picsum.photos/800/600?random=1",
+		alt: "Random image 1",
+		post: "",
+	},
+	{
+		src: "https://picsum.photos/800/600?random=1",
+		alt: "Random image 1",
+		post: "el-dia-que-nos-conocimos",
+	},
+	{
+		src: "https://picsum.photos/800/600?random=1",
+		alt: "Random image 1",
+		post: "",
+	},
+	{
+		src: "https://picsum.photos/800/600?random=1",
+		alt: "Random image 1",
+		post: "",
+	},
+	{
+		src: "https://picsum.photos/800/600?random=1",
+		alt: "Random image 1",
+		post: "",
+	},
+	{
+		src: "https://picsum.photos/800/600?random=1",
+		alt: "Random image 1",
+		post: "",
+	},
+];
 ---
 
 <Layout title="Couple-box">
 	<main>
 		<Music />
 		<Hero />
-		<PhotoAlbum />
+		<PhotoAlbum {imgInfo} />
 	</main>
 </Layout>
 
