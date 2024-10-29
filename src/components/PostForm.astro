@@ -1,0 +1,132 @@
+---
+let title = "";
+let content = "";
+let image = "";
+let music = "";
+let error = "";
+let success = "";
+
+const handleSubmit = async (event: Event) => {
+    event.preventDefault();
+    error = "";
+    success = "";
+
+    if (!title || !content || !image || !music) {
+        error = "All fields are required.";
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title, content, image, music }),
+        });
+
+        if (response.ok) {
+            success = "Post added successfully!";
+            title = "";
+            content = "";
+            image = "";
+            music = "";
+        } else {
+            error = "Failed to add post.";
+        }
+    } catch (err) {
+        error = "An error occurred. Please try again.";
+    }
+};
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Add New Post</title>
+        <link href="/dist/output.css" rel="stylesheet" />
+    </head>
+    <body class="bg-secondary">
+        <main
+            class="max-w-2xl mx-auto p-6 bg-zinc-800 shadow-md rounded-lg mt-10 text-white"
+        >
+            <h1 class="text-2xl font-bold mb-6">Add New Post</h1>
+            {error && <p class="text-red-500 mb-4">{error}</p>}
+            {success && <p class="text-green-500 mb-4">{success}</p>}
+            <form onsubmit=`${handleSubmit}` class="space-y-6">
+                <div>
+                    <label
+                        for="title"
+                        class="block text-sm font-medium text-gray-200"
+                        >Title:</label
+                    >
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={title}
+                        oninput=`${(e: any) => title = e.target.value}`
+                        required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div>
+                    <label
+                        for="content"
+                        class="block text-sm font-medium text-gray-200"
+                        >Content:</label
+                    >
+                    <textarea
+                        id="content"
+                        name="content"
+                        value={content}
+                        oninput=`${(e: any) => title = e.target.value}`
+                        required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    ></textarea>
+                </div>
+                <div>
+                    <label
+                        for="music"
+                        class="block text-sm font-medium text-gray-200"
+                        >Music URL:</label
+                    >
+                    <input
+                        type="text"
+                        id="music"
+                        name="music"
+                        value={music}
+                        oninput=`${(e: any) => image = e.target.value}`
+                        required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div>
+                    <label
+                        for="image"
+                        class="block text-sm font-medium text-gray-200"
+                        >Image URL:</label
+                    >
+                    <input
+                        type="text"
+                        id="image"
+                        name="image"
+                        value={image}
+                        oninput=`${(e: any) => image = e.target.value}`
+                        required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Add Post
+                </button>
+            </form>
+        </main>
+    </body>
+</html>

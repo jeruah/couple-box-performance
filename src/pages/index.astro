@@ -2,44 +2,12 @@
 import Layout from "@/layouts/Layout.astro";
 import { getSession } from "auth-astro/server";
 import { SignIn, SignOut } from "auth-astro/components";
+import imgInfo from "@/post.ts";
 
 import Hero from "@/sections/Hero.astro";
 import PhotoAlbum from "@/sections/PhotoAlbum.astro";
 import Music from "@/components/Music.astro";
 import Login from "@/components/Login.astro";
-
-const imgInfo = [
-	{
-		src: "https://picsum.photos/800/600?random=1",
-		alt: "Random image 1",
-		post: "",
-	},
-	{
-		src: "https://picsum.photos/800/600?random=1",
-		alt: "Random image 1",
-		post: "el-dia-que-nos-conocimos",
-	},
-	{
-		src: "https://picsum.photos/800/600?random=1",
-		alt: "Random image 1",
-		post: "",
-	},
-	{
-		src: "https://picsum.photos/800/600?random=1",
-		alt: "Random image 1",
-		post: "",
-	},
-	{
-		src: "https://picsum.photos/800/600?random=1",
-		alt: "Random image 1",
-		post: "",
-	},
-	{
-		src: "https://picsum.photos/800/600?random=1",
-		alt: "Random image 1",
-		post: "",
-	},
-];
 
 const session = await getSession(Astro.request);
 ---

@@ -1,0 +1,8 @@
+---
+import { getSession } from "auth-astro/server";
+import PostForm from "@/components/PostForm.astro";
+
+const session = await getSession(Astro.request);
+---
+
+{session ? <PostForm /> : Astro.redirect("/")}

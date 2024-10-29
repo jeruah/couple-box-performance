@@ -1,0 +1,8 @@
+---
+import imgInfo from "@/post";
+const { slug } = Astro.params;
+const post_find = imgInfo.find((post) => post.id === slug);
+import PostLayout from "@/layouts/PostLayout.astro";
+---
+
+{post_find ? <PostLayout post_find={post_find} /> : <p>Post not found</p>}

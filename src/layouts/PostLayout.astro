@@ -1,16 +1,23 @@
 ---
-interface PostLayoutProps {
-    title: string;
-    img: {
+interface Props {
+    post_find: {
+        id: string;
         src: string;
         alt: string;
+        post: {
+            title: string;
+            music: string;
+            content: string;
+        };
     };
-    music: string;
 }
 
 import IframeMusic from "@/components/IframeMusic.astro";
-const { frontmatter } = Astro.props as { frontmatter: PostLayoutProps };
-const { title, img, music } = frontmatter;
+const { post_find } = Astro.props;
+const { post } = post_find;
+
+import { marked } from "marked";
+const content = marked.parse(post.content);
 ---
 
 <!doctype html>
@@ -18,18 +25,19 @@ const { title, img, music } = frontmatter;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{title}</title>
+        <title>{post.title}</title>
     </head>
     <body>
         <main class="flex flex-col justify-center bg-secondary text-slate-100">
             <div class="grid grid-cols-1 md:grid-cols-3 w-full gap-4">
                 <div class="flex flex-col col-span-2 bg-secondary mt-10">
                     <h1 class="md:pb-10 text-5xl font-bold text-center">
-                        {title}
+                        {post.title}
                     </h1>
-                    <article class="text-pretty text-lg mx-10 hidden md:block">
-                        <slot />
-                    </article>
+                    <article
+                        class="text-pretty text-lg mx-10 hidden md:block"
+                        set:html={content}
+                    />
                 </div>
                 <div
                     class="flex flex-col items-center md:min-h-screen md:h-full"
@@ -37,10 +45,10 @@ const { title, img, music } = frontmatter;
                     <div class="px-5 mx-5 py-5 md:py-8">
                         <img
                             class="rounded-3xl mb-5"
-                            src={img.src}
-                            alt={img.alt}
+                            src={post_find.src}
+                            alt={post_find.alt}
                         />
-                        <IframeMusic music={music} />
+                        <IframeMusic music={post.music} />
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <button
     class="flex items-center justify-center p-4 bg-secondary rounded-lg border-8 border-slate-400 opacity-10 transform transition-transform; transition-opacity duration-100 hover:scale-105 hover:opacity-30 cursor-pointer"
-    onclick="createNewPost()"
+    onclick="redirect()"
 >
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -14,9 +14,8 @@
         ></path>
     </svg>
 </button>
-
 <script is:inline>
-    function createNewPost() {
-        console.log("Creating a new post");
+    function redirect() {
+        window.location.href = "/AddPost";
     }
 </script>

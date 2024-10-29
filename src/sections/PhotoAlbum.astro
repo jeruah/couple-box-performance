@@ -1,9 +1,14 @@
 ---
 interface Props {
     imgInfo: {
+        id: string;
         src: string;
         alt: string;
-        post: string;
+        post: {
+            title: string;
+            music: string;
+            content: string;
+        };
     }[];
 }
 
@@ -23,8 +28,9 @@ const { imgInfo = [] } = Astro.props;
         >
             {
                 imgInfo.map((img) => (
-                    <a href={`/posts/${img.post}`}>
+                    <a href={`/posts/${img.id}`}>
                         <img
+                            decoding="async"
                             src={img.src}
                             alt={img.alt}
                             class="rounded-lg transform transition-transform duration-100 hover:scale-105 cursor-pointer"
