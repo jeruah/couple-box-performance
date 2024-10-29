@@ -1,9 +1,12 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { getSession } from "auth-astro/server";
+import { SignIn, SignOut } from "auth-astro/components";
 
 import Hero from "@/sections/Hero.astro";
 import PhotoAlbum from "@/sections/PhotoAlbum.astro";
 import Music from "@/components/Music.astro";
+import Login from "@/components/Login.astro";
 
 const imgInfo = [
 	{
@@ -37,13 +40,15 @@ const imgInfo = [
 		post: "",
 	},
 ];
+
+const session = await getSession(Astro.request);
 ---
 
 <Layout title="Couple-box">
 	<main>
 		<Music />
 		<Hero />
-		<PhotoAlbum {imgInfo} />
+		{session ? <PhotoAlbum {imgInfo} /> : <Login />}
 	</main>
 </Layout>
 

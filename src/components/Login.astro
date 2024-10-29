@@ -1,0 +1,19 @@
+<main
+    class="min-h-screen flex flex-col items-center justify-center text-center bg-primary"
+>
+    <div class="max-w-96">
+        <p class="text-7xl">pls loggin first for see your PhotoAlbum</p>
+        <button
+            id="login"
+            class="px-6 py-3 bg-secondary text-white font-bold rounded-md hover:opacity-55 mt-10 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        >
+            Log in with GitHub
+        </button>
+    </div>
+</main>
+<script>
+    const { signIn } = await import("auth-astro/client");
+    document.querySelector("#login")?.addEventListener("click", async () => {
+        await signIn("github");
+    });
+</script>
