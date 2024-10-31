@@ -15,28 +15,6 @@ const handleSubmit = async (event: Event) => {
         error = "All fields are required.";
         return;
     }
-
-    try {
-        const response = await fetch("/api/posts", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ title, content, image, music }),
-        });
-
-        if (response.ok) {
-            success = "Post added successfully!";
-            title = "";
-            content = "";
-            image = "";
-            music = "";
-        } else {
-            error = "Failed to add post.";
-        }
-    } catch (err) {
-        error = "An error occurred. Please try again.";
-    }
 };
 ---
 

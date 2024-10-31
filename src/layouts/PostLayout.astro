@@ -4,17 +4,15 @@ interface Props {
         id: string;
         src: string;
         alt: string;
-        post: {
-            title: string;
-            music: string;
-            content: string;
-        };
+        title: string;
+        music: string;
+        content: string;
     };
 }
 
 import IframeMusic from "@/components/IframeMusic.astro";
 const { post_find } = Astro.props;
-const { post } = post_find;
+const post = post_find;
 
 import { marked } from "marked";
 const content = marked.parse(post.content);
@@ -25,6 +23,7 @@ const content = marked.parse(post.content);
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
         <title>{post.title}</title>
     </head>
     <body>
