@@ -8,7 +8,6 @@ const imgInfo = [
         title: "EL dia que nos conocimos",
         music: "https://open.spotify.com/intl-es/track/2UZZtkoLOg7IHxeTAdPFvd?si=7cf9e43fb3b6469a",
         content: "lorem ipsum, adjkcjaljdkjalksdjfkjdafjlkaj"
-
     },
 ];
 
